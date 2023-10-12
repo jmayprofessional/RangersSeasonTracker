@@ -1,7 +1,7 @@
 # RangersSeasonTracker
 a python based command line designed to connect and interpret NHL api data for the New York Rangers team
 # How to use this program
-please open the script named puckLineStats.py and run it by using the command `python puckLineStats` in your command prompt. 
+please open the script named puckLineStats.py and run it by using the command `python puckLineStats.py` in your command prompt. 
 this should display a list of four options you can choose from to see current New York Rangers Stats powered by the NHL API (link at bottom for reference):
 
 *Select an option:
