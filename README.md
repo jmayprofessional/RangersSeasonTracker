@@ -32,7 +32,7 @@ Jersey Number: 12
 Position Name: Center
 ------
 
-#ThingsToDo
+`To Do List:`
 I would like to expand on this project and add additional stat lines in addition to the ability to compare and contrast games
 I would like to expand on this project by adding a UI to take the place of the command line tool
 I would like to expand on this project by adding individual player stats and the ability to search for each.
