@@ -19,7 +19,7 @@ Location Name: New York
 
 ----
 
-`Full Name: Blake Wheeler
+Full Name: Blake Wheeler
 Jersey Number: 17
 Position Name: Right Wing
 ------
@@ -30,7 +30,7 @@ Position Name: Goalie
 Full Name: Nick Bonino
 Jersey Number: 12
 Position Name: Center
-------`
+------
 
 # To Do List:
 I would like to expand on this project and add additional stat lines in addition to the ability to compare and contrast games
