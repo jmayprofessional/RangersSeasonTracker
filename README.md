@@ -12,6 +12,25 @@ this should display a list of four options you can choose from to see current Ne
 
 By choosing a selection you will see hockey stats specific to each selection displayed in the terminal as a result. 
 
+An example is shown below:
+`Team Name: Rangers
+Location Name: New York`
+
+----
+
+`Full Name: Blake Wheeler
+Jersey Number: 17
+Position Name: Right Wing
+------
+Full Name: Jonathan Quick
+Jersey Number: 32
+Position Name: Goalie
+------
+Full Name: Nick Bonino
+Jersey Number: 12
+Position Name: Center
+------`
+
 #Things to do
 I would like to expand on this project and add additional stat lines in addition to the ability to compare and contrast games
 I would like to expand on this project by adding a UI to take the place of the command line tool
