@@ -12,7 +12,7 @@ this should display a list of four options you can choose from to see current Ne
 
 By choosing a selection you will see hockey stats specific to each selection displayed in the terminal as a result. 
 
-`An example is shown below`:
+# Data examples shown below:
 
 Team Name: Rangers
 Location Name: New York
