@@ -1,103 +1,71 @@
 import requests
 
-def fetch_data(api_url):
-    try:
-        response = requests.get(api_url)
-        response.raise_for_status()  # Raise an exception if the request was unsuccessful
-        
-        # Parse the JSON data from the response
-        data = response.json()
-        return data
-        
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
-    except requests.exceptions.RequestException as err:
-        print(f"Request Exception: {err}")
+def fetch_franchise_data():
+    api_url = "https://statsapi.web.nhl.com/api/v1/franchises/10"
+    response = requests.get(api_url)
+    response.raise_for_status()
+    return response.json()
 
-# Dictionary mapping user choices to API endpoints
-api_endpoints = {
-    1: "https://statsapi.web.nhl.com/api/v1/franchises/10",
-    2: "https://statsapi.web.nhl.com/api/v1/teams/3",
-    3: "https://statsapi.web.nhl.com/api/v1/teams/3/roster",
-    4: "https://statsapi.web.nhl.com/api/v1/teams/3?expand=team.schedule.next"
-    # Add more options as needed
-}
+def fetch_team_data():
+    api_url = "https://statsapi.web.nhl.com/api/v1/teams/3"
+    response = requests.get(api_url)
+    response.raise_for_status()
+    return response.json()
 
-# Display options to the user
-print("Select an option:")
-print("1. Get General Franchise Info")
-print("2. Get General Team Info")
-print("3. Get Roster Info")
-print("4. Get Upcoming Game Info")
+def fetch_roster_data():
+    api_url = "https://statsapi.web.nhl.com/api/v1/teams/3/roster"
+    response = requests.get(api_url)
+    response.raise_for_status()
+    return response.json()
 
-# Take user input for choice
-user_choice = int(input("Enter your choice: "))
+def fetch_upcoming_game_data():
+    api_url = "https://statsapi.web.nhl.com/api/v1/teams/3?expand=team.schedule.next"
+    response = requests.get(api_url)
+    response.raise_for_status()
+    return response.json()
 
-# Check user choice and execute corresponding API call
-if user_choice in api_endpoints:
-    api_url = api_endpoints[user_choice]
-    data = fetch_data(api_url)
+while True:
+    print("Select an option:")
+    print("1. Get General Franchise Info")
+    print("2. Get General Team Info")
+    print("3. Get Roster Info")
+    print("4. Get Upcoming Game Info")
 
-    # Process and print the fetched data based on user choice
-    if user_choice == 1 and 'franchises' in data:
+    user_choice = int(input("Enter your choice: "))
+
+    if user_choice == 1:
+        data = fetch_franchise_data()
         franchise_info = data['franchises'][0]
-        team_name = franchise_info.get('teamName', 'N/A')
-        location_name = franchise_info.get('locationName', 'N/A')
-        print(f"Team Name: {team_name}")
-        print(f"Location Name: {location_name}")
-    elif user_choice == 2 and 'teams' in data:
+        print(f"Team Name: {franchise_info['teamName']}")
+        print(f"Location Name: {franchise_info['locationName']}")
+    elif user_choice == 2:
+        data = fetch_team_data()
         team_info = data['teams'][0]
-        name = team_info.get('name', 'N/A')
-        city = team_info.get('locationName', 'N/A')
-        venue_name = team_info.get('venue', {}).get('name', 'N/A')
-        first_year_of_play = team_info.get('firstYearOfPlay', 'N/A')
-        division_name = team_info.get('division', {}).get('name', 'N/A')
-        conference_name = team_info.get('conference', {}).get('name', 'N/A')
-        
-        print(f"Team Name: {name}")
-        print(f"City: {city}")
-        print(f"Venue Name: {venue_name}")
-        print(f"First Year of Play: {first_year_of_play}")
-        print(f"Division Name: {division_name}")
-        print(f"Conference Name: {conference_name}")
-    elif user_choice == 3 and 'roster' in data:
-        roster = data['roster']
-        for player in roster:
-            full_name = player.get('person', {}).get('fullName', 'N/A')
-            jersey_number = player.get('jerseyNumber', 'N/A')
-            position_name = player.get('position', {}).get('name', 'N/A')
-            print(f"Full Name: {full_name}")
-            print(f"Jersey Number: {jersey_number}")
-            print(f"Position Name: {position_name}")
-            print(f"------")
-    elif user_choice == 4 and 'teams' in data:
-        next_game = data['teams'][0].get('nextGameSchedule', {}).get('dates', [])[0]
-        if next_game:
-            game_date = next_game.get('date', 'N/A')
-            away_team = next_game.get('games', [])[0].get('teams', {}).get('away', {}).get('team', {}).get('name', 'N/A')
-            home_team = next_game.get('games', [])[0].get('teams', {}).get('home', {}).get('team', {}).get('name', 'N/A')
-            away_wins = next_game.get('games', [])[0].get('teams', {}).get('away', {}).get('leagueRecord', {}).get('wins', 'N/A')
-            away_losses = next_game.get('games', [])[0].get('teams', {}).get('away', {}).get('leagueRecord', {}).get('losses', 'N/A')
-            away_ot = next_game.get('games', [])[0].get('teams', {}).get('away', {}).get('leagueRecord', {}).get('ot', 'N/A')
-            home_wins = next_game.get('games', [])[0].get('teams', {}).get('home', {}).get('leagueRecord', {}).get('wins', 'N/A')
-            home_losses = next_game.get('games', [])[0].get('teams', {}).get('home', {}).get('leagueRecord', {}).get('losses', 'N/A')
-            home_ot = next_game.get('games', [])[0].get('teams', {}).get('home', {}).get('leagueRecord', {}).get('ot', 'N/A')
-            
-            print(f"Game Date: {game_date}")
-            print(f"Away Team: {away_team}")
-            print(f"Away Team League Record - Wins: {away_wins}, Losses: {away_losses}, OT: {away_ot}")
-            print(f"Home Team: {home_team}")
-            print(f"Home Team League Record - Wins: {home_wins}, Losses: {home_losses}, OT: {home_ot}")
-        else:
-            print("No upcoming game information available.")
-    elif data:
-        print("Fetched Data:")
-        print(data)
+        print(f"Team Name: {team_info['name']}")
+        print(f"City: {team_info['locationName']}")
+        print(f"Venue Name: {team_info['venue']['name']}")
+        print(f"First Year of Play: {team_info['firstYearOfPlay']}")
+        print(f"Division Name: {team_info['division']['name']}")
+        print(f"Conference Name: {team_info['conference']['name']}")
+    elif user_choice == 3:
+        data = fetch_roster_data()
+        for player in data['roster']:
+            print(f"Full Name: {player['person']['fullName']}")
+            print(f"Jersey Number: {player['jerseyNumber']}")
+            print(f"Position Name: {player['position']['name']}")
+            print("------")
+    elif user_choice == 4:
+        data = fetch_upcoming_game_data()
+        game = data['teams'][0]['nextGameSchedule']['dates'][0]['games'][0]
+        away_team = game['teams']['away']['team']['name']
+        home_team = game['teams']['home']['team']['name']
+        print(f"Game Date: {game['gameDate']}")
+        print(f"Away Team: {away_team}")
+        print(f"Home Team: {home_team}")
     else:
-        print("No valid data found in the API response.")
-else:
-    print("Invalid choice. Please select a valid option.")
+        print("Invalid choice. Please select a valid option.")
+    
+    another_option = input("Do you want to choose another option? (yes/no): ").lower()
+    if another_option != 'yes':
+        print("Thanks for checking out my New York Rangers Stat tracker built with python, Come back soon or give me a really cool job dealing with analytics! Thanks again and have a great season!")
+        break
