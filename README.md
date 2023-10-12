@@ -9,6 +9,7 @@ Select an option:
 2. Get General Team Info
 3. Get Roster Info
 4. Get Upcoming Game Info
+5. Player Comparison
 
 By choosing a selection you will see hockey stats specific to each selection displayed in the terminal as a result. 
 
@@ -31,6 +32,8 @@ Full Name: Nick Bonino
 Jersey Number: 12
 Position Name: Center
 ------
+
+You can spell out two player names from the roster and it will display a table (prettytable) comparing their stats
 
 # To Do List:
 I would like to expand on this project and add additional stat lines in addition to the ability to compare and contrast games
